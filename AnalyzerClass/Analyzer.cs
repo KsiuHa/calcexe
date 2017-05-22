@@ -8,13 +8,13 @@ namespace AnalyzerClass
 {
     public class Analyzer
     {
-        private static int erposition = 0;
+     private static int erposition = 0;
         public static string expression = "";
         public static bool ShowMessege = false;
 
         //-----------------------------------------------------------
 
-        public Analyzer(string exp)
+        public Class2(string exp)
         {
             expression = exp;
         }
@@ -39,14 +39,14 @@ namespace AnalyzerClass
                         Openbreckets++;
                     else
                         if (expression[CurrentPos] == ')')
-                        if (Openbreckets > 0)
-                            Openbreckets--;
-                        else
-                        {
-                            ShowMessege = true;
-                            expression = "error 01";
-                            return false;
-                        }
+                            if (Openbreckets > 0)
+                                Openbreckets--;
+                            else
+                            {
+                                ShowMessege = true;
+                                expression = "error 01";
+                                return false;
+                            }
 
                 }
 
@@ -701,11 +701,11 @@ namespace AnalyzerClass
                             }
                             else
                             {
-                                res = int.Parse(MathLibrary.IABS(a).ToString());
-                                if (MathLibrary._lastError.Length > 0)
+                                res = int.Parse(Class1.IABS(a).ToString());
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
+                                    expression = Class1._lastError;
                                     return expression;
                                 }
                             }
@@ -734,52 +734,52 @@ namespace AnalyzerClass
                         switch (Exp[k].ToString())
                         {
                             case "+":
-                                res = MathLibrary.Add(a, b);
-                                if (MathLibrary._lastError.Length > 0)
+                                res = Class1.Add(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
-                                    MathLibrary._lastError = "";
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
                                     return expression;
                                 }
                                 break;
                             case "-":
-                                res = MathLibrary.Sub(a, b);
-                                if (MathLibrary._lastError.Length > 0)
+                                res = Class1.Sub(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
-                                    MathLibrary._lastError = "";
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
                                     return expression;
                                 }
                                 break;
                             case "*":
-                                res = MathLibrary.Mult(a, b);
-                                if (MathLibrary._lastError.Length > 0)
+                                res = Class1.Mult(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
-                                    MathLibrary._lastError = "";
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
                                     return expression;
                                 }
                                 break;
                             case "/":
-                                res = MathLibrary.Div(a, b);
-                                if (MathLibrary._lastError.Length > 0)
+                                res = Class1.Div(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
-                                    MathLibrary._lastError = "";
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
                                     return expression;
                                 }
                                 break;
                             case "mod":
-                                res = MathLibrary.Mod(a, b);
-                                if (MathLibrary._lastError.Length > 0)
+                                res = Class1.Mod(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
                                     ShowMessege = true;
-                                    expression = MathLibrary._lastError;
-                                    MathLibrary._lastError = "";
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
                                     return expression;
                                 }
                                 break;

@@ -8,7 +8,7 @@ namespace CalcClass
 {
     public static class MathLibrary
     {
-        public static string _lastError = "";
+        private static string _lastError = "";
         public static string lastError
         {
             get { return _lastError; }
