@@ -669,119 +669,129 @@ namespace AnalyzerClass
             }
         }
 
-        public static string RunEstimate()
+
+        public static string RunEstimate(System.Collections.ArrayList Exp)
         {
-            ArrayList Stack = CreateStack();
-            Stack<int> tmp = new Stack<int>();
-            int n;
-
-            foreach (string s in Stack)
+            try
             {
-                if (int.TryParse(s, out n))
+                int k = 0, a, b, res;
+                while (Exp.Count > 1)
                 {
-                    tmp.Push(n);
-                }
-                else
-                {
-                    switch (s)
+                    if (!(("*".Equals(Exp[k])) || ("/".Equals(Exp[k])) || ("+".Equals(Exp[k])) || (("-".Equals(Exp[k])) || ("mod".Equals(Exp[k])))))
                     {
-                        case "*":
+                        if ("m".Equals(Exp[k]) || ("p".Equals(Exp[k])))
+                        {
+                            a = int.Parse(Exp[k - 1].ToString());
+                            if ("p".Equals(Exp[k]))
                             {
-                                tmp.Push(MathLibrary.Mult(tmp.Pop(), tmp.Pop()));
-                                if (MathLibrary.lastError.Length > 0)
-                                {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    
-                                    return Expression;
-                                }
-                                break;
+                                res = a;
                             }
-                        case "/":
+                            else
                             {
-                                n = tmp.Pop();
-                                tmp.Push(MathLibrary.Div(tmp.Pop(), n));
-                                if (MathLibrary.lastError.Length > 0)
+                                res = int.Parse(Class1.IABS(a).ToString());
+                                if (Class1._lastError.Length > 0)
                                 {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    MathLibrary.lastError = "";
-                                    return Expression;
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    return expression;
                                 }
-                                break;
                             }
-                        case "%":
-                            {
-                                n = tmp.Pop();
-                                tmp.Push(MathLibrary.Mod(tmp.Pop(), n));
-                                if (MathLibrary.lastError.Length > 0)
-                                {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    MathLibrary.lastError = "";
-                                    return Expression;
-                                }
-                                break;
-                            }
-                        case "+":
-                            {
-                                tmp.Push(MathLibrary.Add(tmp.Pop(), tmp.Pop()));
-                                if (MathLibrary.lastError.Length > 0)
-                                {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
+                            Exp.RemoveAt(k);
+                            Exp.RemoveAt(k - 1);
 
-                                    return Expression;
-                                }
-                                break;
-                            }
-                        case "-":
-                            {
-                                n = tmp.Pop();
-                             //   if (tmp.Count == 0) tmp.Push(MathLibrary.IABS(n));
-                                /*else*/ tmp.Push(MathLibrary.Sub(tmp.Pop(), n));
-                                if (MathLibrary.lastError.Length > 0)
+                            Exp.Insert(k - 1, res.ToString());
+                            k -= 1;
+                        }
+                        k++;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            a = int.Parse(Exp[k - 2].ToString());
+                            b = int.Parse(Exp[k - 1].ToString());
+                        }
+                        catch
+                        {
+                            ShowMessege = true;
+                            expression = "error 06";
+                            return expression;
+                        }
+
+                        switch (Exp[k].ToString())
+                        {
+                            case "+":
+                                res = Class1.Add(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    return Expression;
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
+                                    return expression;
                                 }
                                 break;
-                            }
-                        case "m":
-                            {
-                                tmp.Push(MathLibrary.IABS(tmp.Pop()));
-                                if (MathLibrary.lastError.Length > 0)
+                            case "-":
+                                res = Class1.Sub(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    return Expression;
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
+                                    return expression;
                                 }
                                 break;
-                            }
-                        case "p":
-                            {
-                                tmp.Push(MathLibrary.ABS(tmp.Pop()));
-                                if (MathLibrary.lastError.Length > 0)
+                            case "*":
+                                res = Class1.Mult(a, b);
+                                if (Class1._lastError.Length > 0)
                                 {
-                                    ShowMessage = true;
-                                    Expression = MathLibrary.lastError;
-                                    return Expression;
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
+                                    return expression;
                                 }
                                 break;
-                            }
-                        default:
-                            {
-                                ShowMessage = true;
-                                Expression = "Error in calculating";
-                                return Expression;
-                            }
+                            case "/":
+                                res = Class1.Div(a, b);
+                                if (Class1._lastError.Length > 0)
+                                {
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
+                                    return expression;
+                                }
+                                break;
+                            case "mod":
+                                res = Class1.Mod(a, b);
+                                if (Class1._lastError.Length > 0)
+                                {
+                                    ShowMessege = true;
+                                    expression = Class1._lastError;
+                                    Class1._lastError = "";
+                                    return expression;
+                                }
+                                break;
+                            default:
+                                ShowMessege = true;
+                                expression = "error 03";
+                                return expression;
+                        }
+                        Exp.RemoveAt(k);
+                        Exp.RemoveAt(k - 1);
+                        Exp.RemoveAt(k - 2);
+                        Exp.Insert(k - 2, res.ToString());
+                        k -= 2;
                     }
                 }
+                return Exp[0].ToString();
             }
-
-            return tmp.Pop().ToString();
+            catch
+            {
+                ShowMessege = true;
+                expression = "error 03";
+                return expression;
+            }
         }
+
         public static string Estimate()
         {
             if (!CheckCurrency())
