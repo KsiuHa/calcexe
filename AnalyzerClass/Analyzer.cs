@@ -9,8 +9,8 @@ namespace AnalyzerClass
     public class Analyzer
     {
         private static int ErrPosition = 0;
-        public static string Expression = "";
-        public static bool ShowMessage = false;
+        public static string expression = "";
+        public static bool ShowMessege = false;
         public static bool CheckCurrency()
         {
             try
@@ -792,25 +792,41 @@ namespace AnalyzerClass
             }
         }
 
+
         public static string Estimate()
         {
             if (!CheckCurrency())
             {
-                ShowMessage = false;
-                return Expression;
+                return expression; ;
             }
-            Expression = Format();
-            Expression = RunEstimate();
-            ShowMessage = false;
-            return Expression;
-        }
-        public static int Priority(string s)
-        {
-            if (s == "*" || s == "/" || s == "%")
-                return 2;
-            else if (s == "+" || s == "-" || s == "m" || s == "p")
-                return 1;
-            else return 0;
+            expression = Format();
+            if (ShowMessege)
+            {
+                ShowMessege = false;
+                return expression;
+            }
+
+            var MyStack = CreateStack();
+
+            if (MyStack.Count > 30)
+            {
+                ShowMessege = true;
+                expression = "Error 08";
+            }
+
+            if (ShowMessege)
+            {
+                ShowMessege = false;
+                return expression;
+            }
+            expression = RunEstimate(MyStack);
+            if (ShowMessege)
+            {
+                ShowMessege = false;
+                return expression;
+            }
+            expression.Trim();
+            return expression;
         }
     }
 }
