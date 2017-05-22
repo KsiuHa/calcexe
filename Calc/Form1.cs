@@ -25,7 +25,7 @@ namespace Calc
             if (Environment.GetCommandLineArgs().Length > 1)
             {
                 Expression.Text = Environment.GetCommandLineArgs()[1];
-                Analyzer.expression = Expression.Text;
+                Analyzer.Expression = Expression.Text;
                 Result.Text = Analyzer.Estimate();
             }
         }
@@ -86,7 +86,7 @@ namespace Calc
         {
             try
             {
-                Analyzer.expression = Expression.Text;
+                Analyzer.Expression = Expression.Text;
                 Result.Text = Analyzer.Estimate();
                 //Result.Text = Analyzer.RunEstimate();
             }
@@ -101,7 +101,7 @@ namespace Calc
             //}
             catch (Exception exception)
             {
-                Result.Text = "Error " + exception;
+                Result.Text = "Error";
             }
         }
 
